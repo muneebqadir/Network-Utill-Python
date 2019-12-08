@@ -1,7 +1,7 @@
-from scapy.all import *
 import matplotlib.pyplot as plt
 import argparse
 from os import getuid
+from scapy.all import *
 
 #ARGUMENTS
 parser = argparse.ArgumentParser(description='Live Traffic Examiner')
