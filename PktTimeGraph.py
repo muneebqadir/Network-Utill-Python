@@ -31,6 +31,6 @@ df  = pd.DataFrame({"Bytes": bytes, "Times":times})
 df = df.set_index('Times')
 #Create a new dataframe of 2 second sums to pass to plotly
 df2=df.resample('2S').sum()
-print(df2)
+print(df2['Bytes'])
 #Create the graph
 plotly.offline.plot({"data":[plotly.graph_objs.Scatter(x=df2.index, y=df2['Bytes'])],"layout":plotly.graph_objs.Layout(title="Bytes over Time ",xaxis=dict(title="Time"),yaxis=dict(title="Bytes"))})

@@ -13,6 +13,7 @@ def DelTime(path, tim):
 		Packet_Time = (row['Time'])
 		Packet_Time = datetime.datetime.strptime(Packet_Time, '%H:%M:%S' ).time()
 		#print(Packet_Time<(time_plus(NowTime,tim)))
+		print("Packet_Time= ",Packet_Time,"<","  NowTime= ", NowTime)
 		if(Packet_Time<(time_minus(NowTime,tim))):
 			data = data.drop(Uid, axis =0)
 	data.to_csv(path)
