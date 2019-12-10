@@ -38,9 +38,7 @@ df2 = pd.DataFrame({"Bytes": bytes, "Times":times})
 df = df.set_index('Times')
 
 #plt.ion()
-plt.ylabel("Bytes")
-plt.xlabel("Time")
-plt.title("Real Time Network Traffic")
+
 plt.tight_layout()
 #plt.show()
 
@@ -69,6 +67,9 @@ def DFrame(packet):
     plt.pause(1)
     #print("Ydata: ", yData,'\n',"xData:   ", xData)
     plt.cla()
+    plt.ylabel("Bytes")
+    plt.xlabel("Time")
+    plt.title("Real Time Network Traffic")
     #ax = plt.subplot(111)
     #ax.bar(xData, yData, width=10)
     #ax.xaxis_time()
