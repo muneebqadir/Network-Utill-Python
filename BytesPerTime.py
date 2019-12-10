@@ -5,6 +5,7 @@ from scapy.all import *
 from datetime import datetime
 import pandas as pd
 from datetime import timedelta
+import numpy as np
 
 
 parser = argparse.ArgumentParser(description='Live Traffic Examiner')
@@ -49,23 +50,31 @@ def DFrame(packet):
     pktBytesTemp.append(pkt.len)
     bytes = pd.Series(pktBytesTemp).astype(int)
     pktTime=datetime.fromtimestamp(pkt.time)
-    pktTimesTemp.append(pktTime.strftime("%Y-%m-%d %H:%M:%S"))
+    pktTimesTemp.append(pktTime.strftime("%H:%M:%S"))
     times = pd.to_datetime(pd.Series(pktTimesTemp).astype(str),  errors='coerce')
     temp_df = pd.DataFrame({"Bytes": bytes, "Times":times})
     global df
     global df2
     df = df.append(temp_df, ignore_index=True)
     df = df.set_index('Times')
-    df = df.resample('2S').sum()
+    df = df.resample('1S').sum()
     df2 = df2.append(df, ignore_index=False)
-    plt.cla()
-    DelTime(60)
+    df = df[0:0]
+    
+    DelTime(90)
     yData = df2['Bytes']
-    xData = df2.index
+    xData = np.arange(len(df2.index))
     
     
-    plt.pause(2)
-    plt.plot(xData, yData)
+    plt.pause(1)
+    #print("Ydata: ", yData,'\n',"xData:   ", xData)
+    plt.cla()
+    #ax = plt.subplot(111)
+    #ax.bar(xData, yData, width=10)
+    #ax.xaxis_time()
+
+    plt.bar(xData, yData, width=0.9, bottom=None,align='edge', data=None)
+    #plt.plot(xData, yData)
     #plt.bar(xData,yData)
     frame1 = plt.gca()
     frame1.axes.get_xaxis().set_visible(False)
