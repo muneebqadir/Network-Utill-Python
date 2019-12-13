@@ -4,7 +4,7 @@ from datetime import datetime
 import pandas as pd
 
 #Read the packets from file
-packets = rdpcap('example.pcap')
+packets = rdpcap('capt.pcap')
 
 #Lists to hold packet info
 pktBytes=[]

@@ -45,20 +45,33 @@ plt.tight_layout()
 def DFrame(packet):
     pktBytesTemp=[]
     pktTimesTemp=[]
-    pktBytesTemp.append(pkt.len)
+    pktBytesTemp.append(1)
     bytes = pd.Series(pktBytesTemp).astype(int)
     pktTime=datetime.fromtimestamp(pkt.time)
     pktTimesTemp.append(pktTime.strftime("%H:%M:%S"))
     times = pd.to_datetime(pd.Series(pktTimesTemp).astype(str),  errors='coerce')
     temp_df = pd.DataFrame({"Bytes": bytes, "Times":times})
+    temp_df = temp_df.set_index('Times')
     global df
     global df2
-    df = df.append(temp_df, ignore_index=True)
-    df = df.set_index('Times')
+    df = df.append(temp_df, ignore_index=False)
+    #df = df.set_index('Times')
     df = df.resample('1S').sum()
     df2 = df2.append(df, ignore_index=False)
-    df = df[0:0]
-    
+    #df = df[0:0]
+    """
+    pktBytesTemp=[]
+    pktTimesTemp=[]
+    pktBytesTemp.append(a)
+    bytes = pd.Series(pktBytesTemp).astype(int)
+    pktTime=datetime.now()
+    pktTimesTemp.append(pktTime.strftime("%H:%M:%S"))
+    times = pd.to_datetime(pd.Series(pktTimesTemp).astype(str),  errors='coerce')
+    temp_df = pd.DataFrame({"Bytes": bytes, "Times":times})
+    temp_df=temp_df.set_index('Times')
+    df = df.append(temp_df, ignore_index=False)
+    df = df.resample('1S').sum()
+    """
     DelTime(90)
     yData = df2['Bytes']
     xData = np.arange(len(df2.index))
